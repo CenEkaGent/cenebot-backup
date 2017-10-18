@@ -45,10 +45,17 @@ def parse_socket_output(slack_rtm_output):
                     return output['text'], output['channel'], output['user']
     return None,None, None
 
+def get_channel_ID():
+    channels = client.api_call("groups.list")['groups']
+    for channel in channels:
+        if channel['name'] == 'test':
+            channel_id = channel['id']
+    return channel_id
 
 def main():
     READ_WEBSOCKET_DELAY = 1
     if client.rtm_connect():
+        client.api_call("chat.postMessage", channel=get_channel_ID(), text="Up and running!", as_user=True)
         print "Cenebot up and running!"
         get_bot_ID()
         while True:
