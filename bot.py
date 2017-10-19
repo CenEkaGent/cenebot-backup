@@ -1,7 +1,7 @@
 import time
 from slackclient import SlackClient
 
-config = {'token': "xoxb-258065498787-5rQHrVjvI1CYvH5fQ3RQYZmq", 'name': "cenebot", 'bot_id': '', 'at_bot': ''}
+config = {'token': "xoxb-258065498787-CqRg3cBMSF9Vvbc3ase9heXp", 'name': "cenebot", 'bot_id': '', 'at_bot': ''}
 
 
 client = SlackClient(config['token'])
@@ -23,7 +23,7 @@ def handle_command(command, channel, user_id):
         if member['id'] == user_id:
             username = member['name']
     
-    if 'Regina' in command:
+    if 'regina' in command.lower() or 'nemesis' in command.lower():
         response = "CAKE FOR ALL, PROVIDED BY " + username
     
     client.api_call("chat.postMessage", channel=channel, text=response, as_user=True)
@@ -64,7 +64,7 @@ def main():
                 handle_command(command, channel, user_id)
             time.sleep(READ_WEBSOCKET_DELAY)
     else:
-        print "Error: connection failed!"
+        print client.rtm_connect()
 
 
 if __name__ == '__main__':
